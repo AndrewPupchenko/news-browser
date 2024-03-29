@@ -70,8 +70,12 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
   },
-  disabledButton: { opacity: 0.5 },
-  container: { padding: 5 },
+  disabledButton: {
+    opacity: 0.5,
+  },
+  container: {
+    padding: 5,
+  },
 })
 
 export default SearchBar
