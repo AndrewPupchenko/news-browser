@@ -1,16 +1,8 @@
 import React, { FC } from "react"
-import {
-  FlatList,
-  ListRenderItem,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from "react-native"
+import { SafeAreaView, StyleSheet } from "react-native"
 import { ApiSortBy } from "../services/api/type"
 import SearchInput from "./SearchInput"
-
-type SearchBarItem = { title: string; key: ApiSortBy }
+import { SearchBarItem, SortBar } from "./SortBar"
 
 type SearchBarProps = {
   defaultSearchKey: string
@@ -31,48 +23,22 @@ const SearchBar: FC<SearchBarProps> = ({
   sortBy,
   handleChangeSort,
 }) => {
-  const onPress = (key: ApiSortBy) => () => handleChangeSort(key)
-
-  const renderItem: ListRenderItem<SearchBarItem> = ({ item }) => (
-    <TouchableOpacity
-      children={<Text style={styles.text}>{item.title}</Text>}
-      onPress={onPress(item.key)}
-      disabled={sortBy === item.key}
-      style={[styles.button, sortBy === item.key && styles.disabledButton]}
-    />
-  )
-
   return (
     <SafeAreaView style={styles.container}>
       <SearchInput
         defaultValue={defaultSearchKey}
         onChangeText={setSearchKey}
       />
-      <FlatList
+      <SortBar
         data={DEFAULT_SORT_VALUES}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.key}
-        horizontal
+        handleChangeSort={handleChangeSort}
+        sortBy={sortBy}
       />
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
-  button: {
-    alignItems: "center",
-    backgroundColor: "#008DDA",
-    padding: 10,
-    margin: 2,
-    borderRadius: 20,
-  },
-  text: {
-    color: "white",
-    fontWeight: "bold",
-  },
-  disabledButton: {
-    opacity: 0.5,
-  },
   container: {
     padding: 5,
   },
